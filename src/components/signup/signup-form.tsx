@@ -160,9 +160,11 @@ export interface UserDetails {
   dateOfBirth: string;
 }
 
-export const SignupForm = (
-  onSuccess?: (userDetails: UserDetails) => void
-): JSX.Element => {
+export interface SignupFormProps {
+  onSuccess?: (userDetails: UserDetails) => void;
+}
+
+export const SignupForm = (props: SignupFormProps): JSX.Element => {
   const [formState, setFormState] = useState<FormState>({
     firstName: "",
     lastName: "",
@@ -273,14 +275,14 @@ export const SignupForm = (
         password: formState.password,
       })
       .then(() => {
-        if (onSuccess) {
+        if (props.onSuccess) {
           const userDetails: UserDetails = {
             firstName: formState.firstName,
             lastName: formState.lastName,
             email: formState.email,
             dateOfBirth: formState.dateOfBirth,
           };
-          onSuccess(userDetails);
+          props.onSuccess(userDetails);
         }
       })
       .catch(() => {

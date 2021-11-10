@@ -1,8 +1,10 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import colours from "./common/colours/colours";
-import StatefulButton from "./components/inputs/stateful_button";
-import { SignupForm } from "./components/signup/signup-form";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages";
+import LoginPage from "./pages/login";
+import SignUpPage from "./pages/signup";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -12,10 +14,14 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <>
+    <Router>
       <GlobalStyle />
-      <SignupForm />
-    </>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+      </Routes>
+    </Router>
   );
 }
 
