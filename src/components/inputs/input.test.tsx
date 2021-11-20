@@ -1,15 +1,15 @@
 import React from "react";
-import InputField from "./input-field";
+import Input from "./input";
 import { fireEvent, render } from "@testing-library/react";
 
 it("renders successfully", () => {
-  render(<InputField type="text" />);
+  render(<Input type="text" />);
 });
 
 it("renders the placeholder", () => {
   const placeholder = "Some placeholder text";
   const { queryByPlaceholderText } = render(
-    <InputField type="text" placeholder={placeholder} />
+    <Input type="text" placeholder={placeholder} />
   );
 
   expect(queryByPlaceholderText(placeholder)).toBeInTheDocument();
@@ -19,11 +19,7 @@ it("calls the on change function when its value is modified", () => {
   const placeholder = "Some placeholder text";
   const onChangeFunction = jest.fn();
   const { getByPlaceholderText } = render(
-    <InputField
-      type="text"
-      onChange={onChangeFunction}
-      placeholder={placeholder}
-    />
+    <Input type="text" onChange={onChangeFunction} placeholder={placeholder} />
   );
 
   // Shouldn't have been called yet

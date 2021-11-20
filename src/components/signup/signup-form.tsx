@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Label } from "../inputs/label";
-import InputField from "../inputs/input-field";
+import Input from "../inputs/input";
 import colours from "../../common/colours/colours";
 import { isValidEmail } from "../../common/email/email";
 import dayjs from "dayjs";
@@ -46,7 +46,7 @@ const EmailAddressContainer = styled.div`
   flex-direction: column;
 `;
 
-const EmailAddressField = styled(InputField)`
+const EmailAddressField = styled(Input)`
   flex-grow: 100;
 `;
 
@@ -61,7 +61,7 @@ const DateOfBirthLabel = styled(Label)`
   margin-bottom: 5px;
 `;
 
-const DateField = styled(InputField)`
+const DateField = styled(Input)`
   flex-grow: 100;
 `;
 
@@ -71,7 +71,7 @@ const PasswordContainer = styled.div`
   flex-direction: column;
 `;
 
-const PasswordField = styled(InputField)`
+const PasswordField = styled(Input)`
   grid-column: span 2;
 `;
 
@@ -300,7 +300,7 @@ export const SignupForm = ({
     <SignUpForm onSubmit={handleSubmit}>
       <SignUpHeading>Sign up</SignUpHeading>
       <NameContainer>
-        <InputField
+        <Input
           type="text"
           placeholder="First name"
           maxLength={32}
@@ -310,7 +310,7 @@ export const SignupForm = ({
         <ErrorField>{formState.firstNameError}</ErrorField>
       </NameContainer>
       <NameContainer>
-        <InputField
+        <Input
           type="text"
           placeholder="Last name"
           maxLength={32}
