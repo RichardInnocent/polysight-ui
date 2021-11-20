@@ -6,7 +6,7 @@ import Button, { ButtonProps } from "./button";
 export interface StatefulButtonProps extends ButtonProps {
   text: string;
   loadingText?: string;
-  loading: boolean;
+  $loading: boolean;
   fontSize: string;
 }
 
@@ -23,8 +23,8 @@ export const StatefulButton = (props: StatefulButtonProps): JSX.Element => {
   return (
     <Button {...props}>
       <div>
-        {props.loading ? <StyledSpinner fontSize={props.fontSize} /> : null}
-        {props.loading && props.loadingText ? props.loadingText : props.text}
+        {props.$loading && <StyledSpinner fontSize={props.fontSize} />}
+        {props.$loading && props.loadingText ? props.loadingText : props.text}
       </div>
     </Button>
   );

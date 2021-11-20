@@ -1,7 +1,17 @@
-export const hosts = {
-  polysightAuth: (): string => {
-    return 'http://localhost:8080';
-  }
-};
+export interface HostConfig {
+  polysightAuth: PolysightAuthConfig,
+}
 
-export default hosts;
+export interface PolysightAuthConfig {
+  baseRoute: () => string,
+  usersRoute: () => string,
+}
+
+export function createPolysightAuthConfig(baseRoute: string): PolysightAuthConfig {
+  return {
+    baseRoute: () => baseRoute,
+    usersRoute: () => baseRoute + "/users",
+  }
+}
+
+export default HostConfig;

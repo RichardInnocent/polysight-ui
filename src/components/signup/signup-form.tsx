@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Label } from "../inputs/label";
 import InputField from "../inputs/input-field";
-import { Button } from "../inputs/button";
 import colours from "../../common/colours/colours";
 import { isValidEmail } from "../../common/email/email";
 import dayjs from "dayjs";
 import axios from "axios";
-import hosts from "../../common/hosts/hosts";
+import { HostConfig } from "../../common/hosts/hosts";
 import StatefulButton from "../inputs/stateful_button";
 
 const limits = {
@@ -162,9 +161,13 @@ export interface UserDetails {
 
 export interface SignupFormProps {
   onSuccess?: (userDetails: UserDetails) => void;
+  hosts: HostConfig;
 }
 
-export const SignupForm = (props: SignupFormProps): JSX.Element => {
+export const SignupForm = ({
+  hosts,
+  onSuccess,
+}: SignupFormProps): JSX.Element => {
   const [formState, setFormState] = useState<FormState>({
     firstName: "",
     lastName: "",
@@ -267,7 +270,7 @@ export const SignupForm = (props: SignupFormProps): JSX.Element => {
     }
 
     axios
-      .post(hosts.polysightAuth() + "/users", {
+      .post(hosts.polysightAuth.usersRoute(), {
         firstName: formState.firstName,
         lastName: formState.lastName,
         email: formState.email,
@@ -275,21 +278,20 @@ export const SignupForm = (props: SignupFormProps): JSX.Element => {
         password: formState.password,
       })
       .then(() => {
-        if (props.onSuccess) {
+        if (onSuccess) {
           const userDetails: UserDetails = {
             firstName: formState.firstName,
             lastName: formState.lastName,
             email: formState.email,
             dateOfBirth: formState.dateOfBirth,
           };
-          props.onSuccess(userDetails);
+          onSuccess(userDetails);
         }
       })
       .catch(() => {
         const newFormState = { ...formState };
         newFormState.submitted = false;
-        newFormState.submitError =
-          "An error occurred 😞 Please try again later.";
+        newFormState.submitError = "An error occurred. Please try again later.";
         setFormState(newFormState);
       });
   };
@@ -366,7 +368,7 @@ export const SignupForm = (props: SignupFormProps): JSX.Element => {
               : ""
           }
           text="Sign up"
-          loading={formState.submitted}
+          $loading={formState.submitted}
           loadingText="Signing you up 🚀"
           fontSize="1.2em"
         />
