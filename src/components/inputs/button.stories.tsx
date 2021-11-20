@@ -15,18 +15,12 @@ const Template: Story<ButtonStoryProps> = (args: ButtonStoryProps) => {
   return <Button {...args}>value</Button>;
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  value: "Button",
-  primary: true,
-  disabled: false,
-};
-
 export const Primary = Template.bind({});
 Primary.args = {
   value: "Button",
   primary: true,
   disabled: false,
+  title: "",
 };
 
 export const Secondary = Template.bind({});
@@ -34,6 +28,7 @@ Secondary.args = {
   value: "Button",
   primary: false,
   disabled: false,
+  title: "",
 };
 
 export const Disabled = Template.bind({});
@@ -41,4 +36,5 @@ Disabled.args = {
   value: "Button",
   primary: false,
   disabled: true,
+  title: "This has been disabled",
 };
