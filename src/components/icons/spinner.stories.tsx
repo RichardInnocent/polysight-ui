@@ -11,7 +11,7 @@ const Template: ComponentStory<typeof Spinner> = (args: SpinnerProps) => (
   <Spinner {...args} />
 );
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Default = Template.bind({});
+Default.args = {
   stroke: "#2b2b2b",
 };
