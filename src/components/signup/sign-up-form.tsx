@@ -16,7 +16,7 @@ const limits = {
   passwordMinLength: 8,
 };
 
-const SignUpForm = styled.form`
+const StyledSignUpForm = styled.form`
   width: 500px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -159,15 +159,15 @@ export interface UserDetails {
   dateOfBirth: string;
 }
 
-export interface SignupFormProps {
+export interface SignUpFormProps {
   onSuccess?: (userDetails: UserDetails) => void;
   hosts: HostConfig;
 }
 
-export const SignupForm = ({
+export const SignUpForm = ({
   hosts,
   onSuccess,
-}: SignupFormProps): JSX.Element => {
+}: SignUpFormProps): JSX.Element => {
   const [formState, setFormState] = useState<FormState>({
     firstName: "",
     lastName: "",
@@ -297,7 +297,7 @@ export const SignupForm = ({
   };
 
   return (
-    <SignUpForm onSubmit={handleSubmit}>
+    <StyledSignUpForm onSubmit={handleSubmit}>
       <SignUpHeading>Sign up</SignUpHeading>
       <NameContainer>
         <Input
@@ -367,15 +367,14 @@ export const SignupForm = ({
               ? "Please address the errors in the form before submitting"
               : ""
           }
-          text="Sign up"
-          $loading={formState.submitted}
-          loadingText="Signing you up 🚀"
-          fontSize="1.2em"
-        />
+          showSpinnerOnLoad={true}
+        >
+          Sign up
+        </Button>
         <ErrorField>{formState.submitError}</ErrorField>
       </SignUpContainer>
-    </SignUpForm>
+    </StyledSignUpForm>
   );
 };
 
-export default SignupForm;
+export default SignUpForm;

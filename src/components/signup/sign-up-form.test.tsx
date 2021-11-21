@@ -1,5 +1,5 @@
 import React from "react";
-import SignupForm from "./signup-form";
+import SignUpForm from "./sign-up-form";
 import {
   fireEvent,
   render,
@@ -25,13 +25,13 @@ const dummyHosts = {
 };
 
 it("renders successfully", () => {
-  render(<SignupForm hosts={dummyHosts} />);
+  render(<SignUpForm hosts={dummyHosts} />);
 });
 
 describe("Validation", () => {
   describe("First name", () => {
     it("displays a warning and disables the sign up button if the first name is not entered", () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       const firstNameInputField = getFirstNameField(renderResult);
       fireEvent.focus(firstNameInputField);
@@ -46,7 +46,7 @@ describe("Validation", () => {
     it(`displays a warning and disables the sign up button if the first name is ${
       limits.firstNameMaxLength + 1
     } long`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(
         getFirstNameField(renderResult),
@@ -62,7 +62,7 @@ describe("Validation", () => {
     });
 
     it("accepts the input if the first name is one character long", () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(getFirstNameField(renderResult), "a");
 
@@ -75,7 +75,7 @@ describe("Validation", () => {
     });
 
     it(`accepts the input if the first name is ${limits.firstNameMaxLength} characters long`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(
         getFirstNameField(renderResult),
@@ -93,7 +93,7 @@ describe("Validation", () => {
 
   describe("Last name", () => {
     it("displays a warning and disables the sign up button if the last name is not entered", () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       const lastNameInputField = getLastNameField(renderResult);
       fireEvent.focus(lastNameInputField);
@@ -108,7 +108,7 @@ describe("Validation", () => {
     it(`displays a warning and disables the sign up button if the last name is ${
       limits.lastNameMaxLength + 1
     } long`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(
         getLastNameField(renderResult),
@@ -124,7 +124,7 @@ describe("Validation", () => {
     });
 
     it("accepts the input if the last name is one character long", () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(getLastNameField(renderResult), "a");
 
@@ -137,7 +137,7 @@ describe("Validation", () => {
     });
 
     it(`accepts the input if the last name is ${limits.lastNameMaxLength} characters long`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(
         getLastNameField(renderResult),
@@ -155,7 +155,7 @@ describe("Validation", () => {
 
   describe("Email address", () => {
     it("displays a warning and disables the sign up button if the email address is not entered", () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       const emailInputField = getEmailAddressField(renderResult);
       fireEvent.focus(emailInputField);
@@ -170,7 +170,7 @@ describe("Validation", () => {
     it(`displays a warning and disables the sign up button if the email address is ${
       limits.emailAddressMaxLength + 1
     } long`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(
         getEmailAddressField(renderResult),
@@ -186,7 +186,7 @@ describe("Validation", () => {
     });
 
     it(`displays a warning and disables the sign up button if the email address invalid`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(getEmailAddressField(renderResult), "invalid email address");
 
@@ -197,7 +197,7 @@ describe("Validation", () => {
     });
 
     it("accepts the input if the email is five characters long and valid", () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(getEmailAddressField(renderResult), "a@b.c");
 
@@ -205,7 +205,7 @@ describe("Validation", () => {
     });
 
     it(`accepts the input if the email is ${limits.emailAddressMaxLength} characters long and valid`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(
         getEmailAddressField(renderResult),
@@ -218,7 +218,7 @@ describe("Validation", () => {
 
   describe("Date of birth", () => {
     it(`displays a warning and disables the sign up button if the date of birth field is invalid`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       const dateOfBirthField = getDateOfBirthField(renderResult);
       fireEvent.focus(dateOfBirthField);
@@ -231,7 +231,7 @@ describe("Validation", () => {
     });
 
     it(`displays a warning and disables the sign up button if the date of birth is in the future`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(
         getDateOfBirthField(renderResult),
@@ -249,7 +249,7 @@ describe("Validation", () => {
 
   describe("Password", () => {
     it(`displays a warning and disables the sign up button if the password is not set`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       const passwordField = getPasswordField(renderResult);
       fireEvent.focus(passwordField);
@@ -264,7 +264,7 @@ describe("Validation", () => {
     });
 
     it(`displays a warning and disables the sign up button if the password is less than ${limits.passwordMinLength} characters`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       setValue(
         getPasswordField(renderResult),
@@ -282,7 +282,7 @@ describe("Validation", () => {
 
   describe("Confirm password", () => {
     it(`displays a warning and disables the sign up button if the confirm password field is not filled`, () => {
-      const renderResult = render(<SignupForm hosts={dummyHosts} />);
+      const renderResult = render(<SignUpForm hosts={dummyHosts} />);
 
       const confirmPasswordField = getConfirmPasswordField(renderResult);
       fireEvent.focus(confirmPasswordField);
@@ -310,7 +310,7 @@ describe("Submit", () => {
     const onSuccess = jest.fn();
 
     const renderResult: RenderResult = render(
-      <SignupForm onSuccess={onSuccess} hosts={dummyHosts} />
+      <SignUpForm onSuccess={onSuccess} hosts={dummyHosts} />
     );
 
     const formState: FormState = {
@@ -343,7 +343,7 @@ describe("Submit", () => {
     const onSuccess = jest.fn();
 
     const renderResult: RenderResult = render(
-      <SignupForm onSuccess={onSuccess} hosts={dummyHosts} />
+      <SignUpForm onSuccess={onSuccess} hosts={dummyHosts} />
     );
     updateFormState(
       {
@@ -372,7 +372,7 @@ describe("Submit", () => {
     const onSuccess = jest.fn();
 
     const renderResult: RenderResult = render(
-      <SignupForm onSuccess={onSuccess} hosts={dummyHosts} />
+      <SignUpForm onSuccess={onSuccess} hosts={dummyHosts} />
     );
 
     const formState: FormState = {

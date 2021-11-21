@@ -4,7 +4,7 @@ import colours from "./common/colours/colours";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages";
 import LoginPage from "./pages/login";
-import SignUpPage from "./pages/signup";
+import SignUpPage from "./pages/sign-up";
 
 const GlobalStyle = createGlobalStyle`
   body {
