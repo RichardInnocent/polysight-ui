@@ -15,7 +15,14 @@ export interface SpinnerProps
 }
 
 export const Spinner = (props: SpinnerProps): JSX.Element => {
-  return <SVGLoaders.Oval {...props} />;
+  return (
+    <SVGLoaders.Oval
+      {...props}
+      role="progressbar"
+      aria-valuetext="Working..."
+      aria-busy="true"
+    />
+  );
 };
 
 export default Spinner;

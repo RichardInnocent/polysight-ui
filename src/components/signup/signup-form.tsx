@@ -7,7 +7,7 @@ import { isValidEmail } from "../../common/email/email";
 import dayjs from "dayjs";
 import axios from "axios";
 import { HostConfig } from "../../common/hosts/hosts";
-import StatefulButton from "../inputs/stateful_button";
+import Button from "../inputs/button";
 
 const limits = {
   firstNameMaxLength: 32,
@@ -358,7 +358,7 @@ export const SignupForm = ({
         <ErrorField>{formState.confirmPasswordError}</ErrorField>
       </PasswordContainer>
       <SignUpContainer>
-        <StatefulButton
+        <Button
           primary
           type="submit"
           disabled={errorsExistInForm(formState) || formState.submitted}

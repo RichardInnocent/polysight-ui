@@ -4,7 +4,7 @@ import { ComponentStory, Meta } from "@storybook/react";
 
 export default {
   component: Spinner,
-  title: "Components/Icons/Spinner",
+  title: "Icons/Spinner",
 } as Meta;
 
 const Template: ComponentStory<typeof Spinner> = (args: SpinnerProps) => (
@@ -13,5 +13,5 @@ const Template: ComponentStory<typeof Spinner> = (args: SpinnerProps) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  stroke: "#2b2b2b",
+  stroke: "#ffffff",
 };
