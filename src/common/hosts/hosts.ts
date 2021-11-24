@@ -14,4 +14,8 @@ export function createPolysightAuthConfig(baseRoute: string): PolysightAuthConfi
   }
 }
 
+export const developmentConfig: HostConfig = {
+  polysightAuth: createPolysightAuthConfig("localhost:8080")
+}
+
 export default HostConfig;
