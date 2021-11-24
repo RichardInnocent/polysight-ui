@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Label } from "../inputs/label";
-import Input from "../inputs/input";
-import colours from "../../common/colours/colours";
-import { isValidEmail } from "../../common/email/email";
+import { Label } from "../../inputs/label";
+import Input from "../../inputs/input";
+import colours from "../../../common/colours/colours";
+import { isValidEmail } from "../../../common/email/email";
 import dayjs from "dayjs";
 import axios from "axios";
-import { HostConfig } from "../../common/hosts/hosts";
-import Button from "../inputs/button";
+import { HostConfig } from "../../../common/hosts/hosts";
+import Button from "../../inputs/button";
 
 const limits = {
   firstNameMaxLength: 32,

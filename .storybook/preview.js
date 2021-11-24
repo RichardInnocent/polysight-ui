@@ -1,3 +1,5 @@
+import GlobalStyle from "../src/common/styling/globalStyle";
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -6,13 +8,15 @@ export const parameters = {
       date: /Date$/,
     },
   },
-  backgrounds: {
-    default: "dark",
-    values: [
-      {
-        name: "dark",
-        value: "#222222",
-      },
-    ],
-  },
 };
+
+export const decorators = [
+  (Story) => {
+    return (
+      <>
+        <GlobalStyle />
+        <Story />
+      </>
+    );
+  },
+];

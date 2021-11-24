@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Button from "./button";
 
 const buttonName = "Button";
@@ -31,8 +26,7 @@ describe("Loading state", () => {
     );
 
     expect(view.queryByRole("progressbar")).not.toBeInTheDocument();
-    view.debug();
-    fireEvent.click(getButton(view));
+    fireEvent.click(getButton());
     expect(view.getByRole("progressbar")).toBeInTheDocument();
 
     await waitFor(() => {
@@ -49,13 +43,12 @@ describe("Loading state", () => {
     );
 
     expect(view.queryByRole("progressbar")).not.toBeInTheDocument();
-    view.debug();
-    fireEvent.click(getButton(view));
+    fireEvent.click(getButton());
     expect(view.getByRole("progressbar")).toBeInTheDocument();
 
     // Clicking an additional three times while the button is still in a loading state
     for (let i = 0; i < 3; i++) {
-      fireEvent.click(getButton(view));
+      fireEvent.click(getButton());
     }
 
     await waitFor(() => {
@@ -65,6 +58,6 @@ describe("Loading state", () => {
   });
 });
 
-function getButton(renderResult: RenderResult): HTMLButtonElement {
-  return renderResult.getByRole("button") as HTMLButtonElement;
+function getButton(): HTMLButtonElement {
+  return screen.getByRole("button") as HTMLButtonElement;
 }

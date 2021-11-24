@@ -1,5 +1,5 @@
 import React from "react";
-import SignUpForm from "../components/signup/sign-up-form";
+import SignUpForm from "../components/features/signup/sign-up-form";
 import HostConfig from "../common/hosts/hosts";
 
 export interface SignUpPageProps {

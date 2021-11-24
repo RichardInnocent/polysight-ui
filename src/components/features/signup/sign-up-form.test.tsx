@@ -9,7 +9,7 @@ import {
 import dayjs from "dayjs";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { createPolysightAuthConfig } from "../../common/hosts/hosts";
+import { createPolysightAuthConfig } from "../../../common/hosts/hosts";
 
 const mockAdapter = new MockAdapter(axios);
 
