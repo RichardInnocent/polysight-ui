@@ -5,12 +5,14 @@ export interface HostConfig {
 export interface PolysightAuthConfig {
   baseRoute: () => string,
   usersRoute: () => string,
+  authenticateRoute: () => string
 }
 
 export function createPolysightAuthConfig(baseRoute: string): PolysightAuthConfig {
   return {
     baseRoute: () => baseRoute,
     usersRoute: () => baseRoute + "/users",
+    authenticateRoute: () => baseRoute + "/authenticate"
   }
 }
 

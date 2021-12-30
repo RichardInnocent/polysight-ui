@@ -303,7 +303,7 @@ export const SignUpForm = ({
         <Input
           type="text"
           placeholder="First name"
-          maxLength={32}
+          maxLength={limits.firstNameMaxLength}
           onBlur={handleFirstNameChange}
           errorState={formState.firstNameError.length > 0}
         />
@@ -313,7 +313,7 @@ export const SignUpForm = ({
         <Input
           type="text"
           placeholder="Last name"
-          maxLength={32}
+          maxLength={limits.lastNameMaxLength}
           onBlur={handleLastNameChange}
           errorState={formState.lastNameError.length > 0}
         />
@@ -323,7 +323,7 @@ export const SignUpForm = ({
         <EmailAddressField
           type="email"
           placeholder="Email address"
-          maxLength={128}
+          maxLength={limits.emailAddressMaxLength}
           onBlur={handleEmailAddressChange}
           errorState={formState.emailError.length > 0}
         />

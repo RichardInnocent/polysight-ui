@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Button, { ButtonProps } from "./button";
 
 export default {
-  title: "Inputs/Stateful Button",
+  title: "Inputs/Button",
   component: Button,
 } as Meta;
 
