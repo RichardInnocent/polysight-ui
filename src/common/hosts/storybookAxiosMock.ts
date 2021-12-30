@@ -6,13 +6,13 @@ import MockAdapter from 'axios-mock-adapter';
 // https://gist.github.com/rafaelrozon/ed86efbea53094726e162dc05882cddc
 
 export interface AxiosMockProps {
-  children: any;
+  children: JSX.Element;
   mock: (adapter: MockAdapter) => void;
 }
 
 const apiMock = new MockAdapter(axios);
 
-export const AxiosMock = ({ children, mock }: AxiosMockProps): any => {
+export const AxiosMock = ({ children, mock }: AxiosMockProps): JSX.Element => {
   useEffect(() => {
     mock(apiMock);
     return () => {
