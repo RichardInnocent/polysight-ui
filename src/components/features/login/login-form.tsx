@@ -36,14 +36,6 @@ const ErrorMessage = styled.div`
 
 const authCookieName = "polysight-auth";
 
-interface FormState {
-  email: string;
-  emailError: string;
-  password: string;
-  passwordError: string;
-  submitError: string;
-}
-
 interface LoginRequestBody {
   email: string;
   password: string;
@@ -66,39 +58,40 @@ function validatePassword(password: string): string {
 }
 
 export const LoginForm = ({ hosts }: LoginFormProps): ReactElement => {
-  const [formState, setFormState] = useState<FormState>({
-    email: "",
-    emailError: "",
-    password: "",
-    passwordError: "",
-    submitError: "",
-  });
-
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [submitError, setSubmitError] = useState("");
   const [, setCookie] = useCookies([authCookieName]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState((fs) => {
-      fs.email = e.target.value;
-      fs.emailError = validateEmail(fs.email);
-      return fs;
-    });
+    setEmail(e.target.value);
+    setEmailError(validateEmail(e.target.value))
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState((fs) => {
-      fs.password = e.target.value;
-      fs.passwordError = validatePassword(fs.password);
-      return fs;
-    });
+    setPassword(e.target.value);
+    setPasswordError(validatePassword(e.target.value));
   };
 
   const onSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
 
+    const currentEmailError = validateEmail(email);
+    const currentPasswordError = validatePassword(password);
+    setEmailError(currentEmailError);
+    setPasswordError(currentPasswordError);
+    if (currentEmailError.length > 1 || currentPasswordError.length > 1) {
+      return;
+    }
+
     const payload = {
-      email: formState.email,
-      password: formState.password,
+      email: email,
+      password: password,
     } as LoginRequestBody;
+
+    console.log(hosts.polysightAuth.authenticateRoute())
 
     axios
       .post<LoginResponse>(hosts.polysightAuth.authenticateRoute(), payload)
@@ -108,15 +101,9 @@ export const LoginForm = ({ hosts }: LoginFormProps): ReactElement => {
         } as CookieSetOptions);
       })
       .catch(() => {
-        setFormState((fs) => {
-          fs.submitError = "Something went wrong";
-          return fs;
-        });
+        setSubmitError("Something went wrong.")
       });
   };
-
-  console.log(formState.emailError);
-  console.log(formState.passwordError);
 
   return (
     <StyledSignUpForm>
@@ -125,31 +112,31 @@ export const LoginForm = ({ hosts }: LoginFormProps): ReactElement => {
         <Input
           placeholder="Email address"
           onChange={handleEmailChange}
-          errorState={formState.emailError.length > 0}
+          errorState={emailError.length > 0}
         />
-        <ErrorMessage>{formState.emailError}</ErrorMessage>
+        <ErrorMessage>{emailError}</ErrorMessage>
       </FormFieldDiv>
       <FormFieldDiv>
         <Input
           placeholder="Password"
           type="password"
           onChange={handlePasswordChange}
-          errorState={formState.passwordError.length > 0}
+          errorState={passwordError.length > 0}
         />
-        <ErrorMessage>{formState.passwordError}</ErrorMessage>
+        <ErrorMessage>{passwordError}</ErrorMessage>
       </FormFieldDiv>
       <FormFieldDiv>
         <Button
           primary
           onClick={onSubmit}
           disabled={
-            formState.emailError.length > 0 ||
-            formState.passwordError.length > 0
+            emailError.length > 0 ||
+            passwordError.length > 0
           }
         >
           Log in
         </Button>
-        <ErrorMessage>{formState.submitError}</ErrorMessage>
+        <ErrorMessage>{submitError}</ErrorMessage>
       </FormFieldDiv>
     </StyledSignUpForm>
   );

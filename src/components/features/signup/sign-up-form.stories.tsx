@@ -14,7 +14,6 @@ const Template: ComponentStory<typeof SignUpForm> = (args: SignUpFormProps) => {
   const axiosMock = (apiMock: MockAdapter) => {
     apiMock.onPost(developmentConfig.polysightAuth.usersRoute()).reply(200);
   };
-  console.log(developmentConfig);
   return (
     <AxiosMock mock={axiosMock}>
       <SignUpForm {...args} hosts={developmentConfig} />
