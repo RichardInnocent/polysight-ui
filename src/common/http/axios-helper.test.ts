@@ -19,7 +19,7 @@ describe("axios-helper", () => {
                 throwIfNot2xx(createAxiosResponseMock(199, simpleResponseBody));
                 fail("No error thrown");
             } catch (e: unknown) {
-                expectErrorMessage(e).toBe(`${errorMessagePrefix}. Response: ${simpleResponseBody}`);
+                expectErrorMessage(e).toBe(`${errorMessagePrefix}. Status: 199. Response: ${simpleResponseBody}`);
             }
         });
 
@@ -28,7 +28,7 @@ describe("axios-helper", () => {
                 throwIfNot2xx(createAxiosResponseMock(300, simpleResponseBody));
                 fail("No error thrown");
             } catch (e: unknown) {
-                expectErrorMessage(e).toBe(`${errorMessagePrefix}. Response: ${simpleResponseBody}`);
+                expectErrorMessage(e).toBe(`${errorMessagePrefix}. Status: 300. Response: ${simpleResponseBody}`);
             }
         });
 
@@ -40,7 +40,7 @@ describe("axios-helper", () => {
                     throwIfNot2xx(createAxiosResponseMock(statusCode, ""));
                     fail("No error thrown");
                 } catch (e: unknown) {
-                    expectErrorMessage(e).toBe(`${errorMessagePrefix}`);
+                    expectErrorMessage(e).toBe(`${errorMessagePrefix}. Status: ${statusCode}`);
                 }
             });
 
@@ -51,7 +51,7 @@ describe("axios-helper", () => {
                     }));
                     fail("No error thrown");
                 } catch (e: unknown) {
-                    expectErrorMessage(e).toBe(`${errorMessagePrefix}. Response: {"reason":"Invalid request"}`);
+                    expectErrorMessage(e).toBe(`${errorMessagePrefix}. Status: ${statusCode}. Response: {"reason":"Invalid request"}`);
                 }
             });
         });
