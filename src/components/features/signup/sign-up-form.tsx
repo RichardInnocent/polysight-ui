@@ -5,9 +5,9 @@ import Input from "../../inputs/input";
 import colours from "../../../common/colours/colours";
 import { isValidEmail } from "../../../common/email/email";
 import dayjs from "dayjs";
-import axios from "axios";
 import { HostConfig } from "../../../common/hosts/hosts";
 import Button from "../../inputs/button";
+import { CreateUserRequestDto } from "../../../common/hosts/auth/auth";
 
 const limits = {
   firstNameMaxLength: 32,
@@ -160,14 +160,10 @@ export interface UserDetails {
 }
 
 export interface SignUpFormProps {
-  onSuccess?: (userDetails: UserDetails) => void;
-  hosts: HostConfig;
+  onSubmit: (userDetails: CreateUserRequestDto) => void;
 }
 
-export const SignUpForm = ({
-  hosts,
-  onSuccess,
-}: SignUpFormProps): JSX.Element => {
+export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
   const [formState, setFormState] = useState<FormState>({
     firstName: "",
     lastName: "",
@@ -269,31 +265,15 @@ export const SignUpForm = ({
       return;
     }
 
-    axios
-      .post(hosts.polysightAuth.usersRoute(), {
-        firstName: formState.firstName,
-        lastName: formState.lastName,
-        email: formState.email,
-        dateOfBirth: formState.dateOfBirth,
-        password: formState.password,
-      })
-      .then(() => {
-        if (onSuccess) {
-          const userDetails: UserDetails = {
-            firstName: formState.firstName,
-            lastName: formState.lastName,
-            email: formState.email,
-            dateOfBirth: formState.dateOfBirth,
-          };
-          onSuccess(userDetails);
-        }
-      })
-      .catch(() => {
-        const newFormState = { ...formState };
-        newFormState.submitted = false;
-        newFormState.submitError = "An error occurred. Please try again later.";
-        setFormState(newFormState);
-      });
+    const userDetails = {
+      email: formState.email,
+      firstName: formState.firstName,
+      lastName: formState.lastName,
+      dateOfBirth: formState.dateOfBirth,
+      password: formState.password,
+    } as CreateUserRequestDto;
+
+    onSubmit(userDetails);
   };
 
   return (

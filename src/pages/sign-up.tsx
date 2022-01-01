@@ -1,16 +1,23 @@
 import React from "react";
 import SignUpForm from "../components/features/signup/sign-up-form";
-import HostConfig from "../common/hosts/hosts";
+import { UsersApi } from "../common/hosts/auth/auth";
 
 export interface SignUpPageProps {
-  hosts: HostConfig;
+  users: UsersApi;
 }
 
-export const SignUpPage = (props: SignUpPageProps): JSX.Element => {
+export const SignUpPage = ({ users }: SignUpPageProps): JSX.Element => {
   return (
     <div>
       <p>This is the sign-up page</p>
-      <SignUpForm {...props} />
+      <SignUpForm
+        onSubmit={(userDetails) => {
+          // TODO redirect and error
+          users
+            .createUser(userDetails)
+            .catch(() => console.log("Failed to create user"));
+        }}
+      />
     </div>
   );
 };

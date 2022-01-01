@@ -3,9 +3,9 @@ import {
   CreateUserResponseDto,
   LoginRequestDto,
   LoginResponseDto,
-  newAuthConfig,
-  newAuthenticateConfig,
-  newUserConfig,
+  newAuthService,
+  newAuthenticateApi,
+  newUserApi,
 } from "./auth";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -16,7 +16,7 @@ describe("auth", () => {
   const baseRoute = "https://application.com";
   describe("auth config", () => {
     it("configures the routes with the correct base routes", () => {
-      const config = newAuthConfig(baseRoute);
+      const config = newAuthService(baseRoute);
       expect(config.baseRoute).toBe(baseRoute);
       expect(config.users.baseRoute).toBe(`${baseRoute}/users`);
       expect(config.authenticate.baseRoute).toBe(`${baseRoute}/authenticate`);
@@ -24,7 +24,7 @@ describe("auth", () => {
   });
 
   describe("users", () => {
-    const users = newUserConfig(baseRoute);
+    const users = newUserApi(baseRoute);
 
     describe("create", () => {
       const createUserRequestBody = {
@@ -67,7 +67,7 @@ describe("auth", () => {
   });
 
   describe("authenticate", () => {
-    const authenticate = newAuthenticateConfig(baseRoute);
+    const authenticate = newAuthenticateApi(baseRoute);
 
     describe("authenticate", () => {
       const loginRequestBody = {

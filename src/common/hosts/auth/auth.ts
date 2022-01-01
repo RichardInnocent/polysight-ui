@@ -1,21 +1,21 @@
 import axios from "axios";
 import { throwIfNot2xx } from "../../http/axios-helper";
 
-export interface AuthConfig {
+export interface AuthService {
   baseRoute: string;
-  users: Users;
+  users: UsersApi;
   authenticate: Authenticate;
 }
 
-export const newAuthConfig = (baseRoute: string): AuthConfig => {
+export const newAuthService = (baseRoute: string): AuthService => {
   return {
     baseRoute: baseRoute,
-    users: newUserConfig(baseRoute + "/users"),
-    authenticate: newAuthenticateConfig(baseRoute + "/authenticate"),
-  } as AuthConfig;
+    users: newUserApi(baseRoute + "/users"),
+    authenticate: newAuthenticateApi(baseRoute + "/authenticate"),
+  } as AuthService;
 };
 
-export const newUserConfig = (baseRoute: string): Users => {
+export const newUserApi = (baseRoute: string): UsersApi => {
   return {
     baseRoute: baseRoute,
     createUser: (user: CreateUserRequestDto) => {
@@ -26,13 +26,13 @@ export const newUserConfig = (baseRoute: string): Users => {
           return response.data;
         });
     },
-  } as Users;
+  } as UsersApi;
 };
 
 /**
  * Route for interacting with user information.
  */
-export interface Users {
+export interface UsersApi {
   /**
    * The base route.
    */
@@ -107,7 +107,7 @@ export interface CreateUserResponseDto {
   accountStatus: "active" | "disabled";
 }
 
-export const newAuthenticateConfig = (baseRoute: string): Authenticate => {
+export const newAuthenticateApi = (baseRoute: string): Authenticate => {
   return {
     baseRoute: baseRoute,
     login: (credentials: LoginRequestDto) => {
