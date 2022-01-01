@@ -1,6 +1,5 @@
 import { ComponentStory, Meta } from "@storybook/react";
 import React from "react";
-import { developmentConfig } from "../../../common/hosts/hosts";
 import LoginForm, { LoginFormProps } from "./login-form";
 
 export default {
@@ -14,5 +13,5 @@ const Template: ComponentStory<typeof LoginForm> = (props: LoginFormProps) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  hosts: developmentConfig,
+  onSubmit: (credentials) => console.log("Signing in user", credentials),
 } as LoginFormProps;

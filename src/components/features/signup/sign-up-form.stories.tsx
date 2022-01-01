@@ -10,20 +10,13 @@ export default {
   component: SignUpForm,
 } as Meta;
 
-const Template: ComponentStory<typeof SignUpForm> = (args: SignUpFormProps) => {
-  const axiosMock = (apiMock: MockAdapter) => {
-    apiMock.onPost(developmentConfig.polysightAuth.usersRoute()).reply(200);
-  };
-  return (
-    <AxiosMock mock={axiosMock}>
-      <SignUpForm {...args} hosts={developmentConfig} />
-    </AxiosMock>
-  );
+const Template: ComponentStory<typeof SignUpForm> = (
+  props: SignUpFormProps
+) => {
+  return <SignUpForm {...props} />;
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  onSuccess: (userDetails: UserDetails) => {
-    console.log(userDetails);
-  },
+  onSubmit: (userDetails) => console.log("Creating user...", userDetails),
 };
