@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import { useEffect } from "react";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 
 // Solution for mocking axios calls in Storybook from
 // https://gist.github.com/rafaelrozon/ed86efbea53094726e162dc05882cddc
