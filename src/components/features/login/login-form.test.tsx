@@ -26,7 +26,50 @@ describe("Login form", () => {
     expect(props.onSubmit).toHaveBeenCalledWith(credentials);
   });
 
-  // TODO validation tests
+  describe("validation", () => {
+    const emailError = "Please enter the email address that you signed up with";
+    const passwordError = "Please enter your password";
+
+    it("displays no errors when first loaded", () => {
+      render(<LoginForm {...props} />);
+      expect(screen.queryByText(emailError)).not.toBeInTheDocument();
+      expect(screen.queryByText(passwordError)).not.toBeInTheDocument();
+    });
+
+    it("displays an error if the email is empty", () => {
+      render(<LoginForm {...props} />);
+      setInputs({
+        email: "email",
+        password: "password",
+      });
+
+      setInputs({
+        email: "",
+        password: "password",
+      });
+
+      expect(screen.queryByText(emailError)).toBeInTheDocument();
+      expect(screen.queryByText(passwordError)).not.toBeInTheDocument();
+      expect(getLoginButton()).toBeDisabled();
+    });
+
+    it("displays an error if the password is empty", () => {
+      render(<LoginForm {...props} />);
+      setInputs({
+        email: "email",
+        password: "password",
+      });
+
+      setInputs({
+        email: "email",
+        password: "",
+      });
+
+      expect(screen.queryByText(emailError)).not.toBeInTheDocument();
+      expect(screen.queryByText(passwordError)).toBeInTheDocument();
+      expect(getLoginButton()).toBeDisabled();
+    });
+  });
 });
 
 function setInputs(credentials: LoginRequestDto) {
