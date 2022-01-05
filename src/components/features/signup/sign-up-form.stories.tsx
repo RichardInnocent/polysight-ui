@@ -1,9 +1,6 @@
 import React from "react";
 import { ComponentStory, Meta } from "@storybook/react";
-import SignUpForm, { SignUpFormProps, UserDetails } from "./sign-up-form";
-import MockAdapter from "axios-mock-adapter/types";
-import AxiosMock from "../../../common/hosts/storybookAxiosMock";
-import { developmentConfig } from "../../../common/hosts/hosts";
+import SignUpForm, { SignUpFormProps } from "./sign-up-form";
 
 export default {
   title: "Features/Sign Up",
