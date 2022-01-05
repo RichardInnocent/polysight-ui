@@ -12,14 +12,14 @@ describe("Button", () => {
   });
 
   describe("Loading state", () => {
-    const waitTime = 2000;
-
-    const onClick = jest.fn(async () => {
+    const waitTime = 50;
+    const onClickImpl = async () => {
       await new Promise((resolve) => setTimeout(resolve, waitTime));
-      return;
-    });
+    };
 
     it("renders the loading spinner while waiting for the action to complete, and then removes it", async () => {
+      const onClick = jest.fn(onClickImpl);
+
       const view = render(
         <Button showSpinnerOnLoad={true} onClick={onClick}>
           {buttonName}
@@ -37,6 +37,8 @@ describe("Button", () => {
     });
 
     it("ignores any other clicks while loading", async () => {
+      const onClick = jest.fn(onClickImpl);
+
       const view = render(
         <Button showSpinnerOnLoad={true} onClick={onClick}>
           {buttonName}

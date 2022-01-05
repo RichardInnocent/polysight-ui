@@ -16,8 +16,6 @@ const limits = {
   passwordMinLength: 8,
 };
 
-const onSubmit = jest.fn();
-
 interface FormState {
   firstName?: string;
   lastName?: string;
@@ -29,13 +27,13 @@ interface FormState {
 
 describe("Sign up form", () => {
   it("renders successfully", () => {
-    render(<SignUpForm onSubmit={onSubmit} />);
+    render(<SignUpForm onSubmit={jest.fn()} />);
   });
 
   describe("Validation", () => {
     describe("First name", () => {
       it("displays a warning and disables the sign up button if the first name is not entered", () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         const firstNameInputField = getFirstNameField(renderResult);
         fireEvent.focus(firstNameInputField);
@@ -50,7 +48,7 @@ describe("Sign up form", () => {
       it(`displays a warning and disables the sign up button if the first name is ${
         limits.firstNameMaxLength + 1
       } long`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
           getFirstNameField(renderResult),
@@ -66,7 +64,7 @@ describe("Sign up form", () => {
       });
 
       it("accepts the input if the first name is one character long", () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(getFirstNameField(renderResult), "a");
 
@@ -79,7 +77,7 @@ describe("Sign up form", () => {
       });
 
       it(`accepts the input if the first name is ${limits.firstNameMaxLength} characters long`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
           getFirstNameField(renderResult),
@@ -97,7 +95,7 @@ describe("Sign up form", () => {
 
     describe("Last name", () => {
       it("displays a warning and disables the sign up button if the last name is not entered", () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         const lastNameInputField = getLastNameField(renderResult);
         fireEvent.focus(lastNameInputField);
@@ -112,7 +110,7 @@ describe("Sign up form", () => {
       it(`displays a warning and disables the sign up button if the last name is ${
         limits.lastNameMaxLength + 1
       } long`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
           getLastNameField(renderResult),
@@ -128,7 +126,7 @@ describe("Sign up form", () => {
       });
 
       it("accepts the input if the last name is one character long", () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(getLastNameField(renderResult), "a");
 
@@ -141,7 +139,7 @@ describe("Sign up form", () => {
       });
 
       it(`accepts the input if the last name is ${limits.lastNameMaxLength} characters long`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
           getLastNameField(renderResult),
@@ -159,7 +157,7 @@ describe("Sign up form", () => {
 
     describe("Email address", () => {
       it("displays a warning and disables the sign up button if the email address is not entered", () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         const emailInputField = getEmailAddressField(renderResult);
         fireEvent.focus(emailInputField);
@@ -174,7 +172,7 @@ describe("Sign up form", () => {
       it(`displays a warning and disables the sign up button if the email address is ${
         limits.emailAddressMaxLength + 1
       } long`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
           getEmailAddressField(renderResult),
@@ -190,7 +188,7 @@ describe("Sign up form", () => {
       });
 
       it(`displays a warning and disables the sign up button if the email address invalid`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(getEmailAddressField(renderResult), "invalid email address");
 
@@ -201,7 +199,7 @@ describe("Sign up form", () => {
       });
 
       it("accepts the input if the email is five characters long and valid", () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(getEmailAddressField(renderResult), "a@b.c");
 
@@ -209,7 +207,7 @@ describe("Sign up form", () => {
       });
 
       it(`accepts the input if the email is ${limits.emailAddressMaxLength} characters long and valid`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
           getEmailAddressField(renderResult),
@@ -222,7 +220,7 @@ describe("Sign up form", () => {
 
     describe("Date of birth", () => {
       it(`displays a warning and disables the sign up button if the date of birth field is invalid`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         const dateOfBirthField = getDateOfBirthField(renderResult);
         fireEvent.focus(dateOfBirthField);
@@ -235,7 +233,7 @@ describe("Sign up form", () => {
       });
 
       it(`displays a warning and disables the sign up button if the date of birth is in the future`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
           getDateOfBirthField(renderResult),
@@ -253,7 +251,7 @@ describe("Sign up form", () => {
 
     describe("Password", () => {
       it(`displays a warning and disables the sign up button if the password is not set`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         const passwordField = getPasswordField(renderResult);
         fireEvent.focus(passwordField);
@@ -268,7 +266,7 @@ describe("Sign up form", () => {
       });
 
       it(`displays a warning and disables the sign up button if the password is less than ${limits.passwordMinLength} characters`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
           getPasswordField(renderResult),
@@ -286,7 +284,7 @@ describe("Sign up form", () => {
 
     describe("Confirm password", () => {
       it(`displays a warning and disables the sign up button if the confirm password field is not filled`, () => {
-        const renderResult = render(<SignUpForm onSubmit={onSubmit} />);
+        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         const confirmPasswordField = getConfirmPasswordField(renderResult);
         fireEvent.focus(confirmPasswordField);
@@ -302,6 +300,7 @@ describe("Sign up form", () => {
 
   describe("Submit", () => {
     it("performs provided action if the sign up is successful", async () => {
+      const onSubmit = jest.fn();
       const renderResult: RenderResult = render(
         <SignUpForm onSubmit={onSubmit} />
       );
@@ -328,6 +327,7 @@ describe("Sign up form", () => {
     });
 
     it("does not perform any action if passwords do not match", async () => {
+      const onSubmit = jest.fn();
       const renderResult: RenderResult = render(
         <SignUpForm onSubmit={onSubmit} />
       );
