@@ -1,11 +1,6 @@
 import React from "react";
 import SignUpForm from "./sign-up-form";
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import dayjs from "dayjs";
 import { CreateUserRequestDto } from "../../../common/hosts/auth/auth";
 
@@ -33,210 +28,201 @@ describe("Sign up form", () => {
   describe("Validation", () => {
     describe("First name", () => {
       it("displays a warning and disables the sign up button if the first name is not entered", () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        const firstNameInputField = getFirstNameField(renderResult);
+        const firstNameInputField = getFirstNameField();
         fireEvent.focus(firstNameInputField);
         fireEvent.blur(firstNameInputField);
 
         expect(
-          renderResult.getByText("Please provide your first name")
+          screen.getByText("Please provide your first name")
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
 
       it(`displays a warning and disables the sign up button if the first name is ${
         limits.firstNameMaxLength + 1
       } long`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
-          getFirstNameField(renderResult),
+          getFirstNameField(),
           "a".repeat(limits.firstNameMaxLength + 1)
         );
 
         expect(
-          renderResult.getByText(
+          screen.getByText(
             `Must be ${limits.firstNameMaxLength} characters or fewer`
           )
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
 
       it("accepts the input if the first name is one character long", () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        setValue(getFirstNameField(renderResult), "a");
+        setValue(getFirstNameField(), "a");
 
         expect(
-          renderResult.queryByText(
+          screen.queryByText(
             `Must be ${limits.firstNameMaxLength} characters or fewer`
           )
         ).not.toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).not.toBeDisabled();
+        expect(getSubmitButton()).not.toBeDisabled();
       });
 
       it(`accepts the input if the first name is ${limits.firstNameMaxLength} characters long`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        setValue(
-          getFirstNameField(renderResult),
-          "a".repeat(limits.firstNameMaxLength)
-        );
+        setValue(getFirstNameField(), "a".repeat(limits.firstNameMaxLength));
 
         expect(
-          renderResult.queryByText(
+          screen.queryByText(
             `Must be ${limits.firstNameMaxLength} characters or fewer`
           )
         ).not.toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).not.toBeDisabled();
+        expect(getSubmitButton()).not.toBeDisabled();
       });
     });
 
     describe("Last name", () => {
       it("displays a warning and disables the sign up button if the last name is not entered", () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        const lastNameInputField = getLastNameField(renderResult);
+        const lastNameInputField = getLastNameField();
         fireEvent.focus(lastNameInputField);
         fireEvent.blur(lastNameInputField);
 
         expect(
-          renderResult.getByText("Please provide your last name")
+          screen.getByText("Please provide your last name")
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
 
       it(`displays a warning and disables the sign up button if the last name is ${
         limits.lastNameMaxLength + 1
       } long`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        setValue(
-          getLastNameField(renderResult),
-          "a".repeat(limits.lastNameMaxLength + 1)
-        );
+        setValue(getLastNameField(), "a".repeat(limits.lastNameMaxLength + 1));
 
         expect(
-          renderResult.getByText(
+          screen.getByText(
             `Must be ${limits.lastNameMaxLength} characters or fewer`
           )
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
 
       it("accepts the input if the last name is one character long", () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        setValue(getLastNameField(renderResult), "a");
+        setValue(getLastNameField(), "a");
 
         expect(
-          renderResult.queryByText(
+          screen.queryByText(
             `Must be ${limits.lastNameMaxLength} characters or fewer`
           )
         ).not.toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).not.toBeDisabled();
+        expect(getSubmitButton()).not.toBeDisabled();
       });
 
       it(`accepts the input if the last name is ${limits.lastNameMaxLength} characters long`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        setValue(
-          getLastNameField(renderResult),
-          "a".repeat(limits.lastNameMaxLength)
-        );
+        setValue(getLastNameField(), "a".repeat(limits.lastNameMaxLength));
 
         expect(
-          renderResult.queryByText(
+          screen.queryByText(
             `Must be ${limits.lastNameMaxLength} characters or fewer`
           )
         ).not.toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).not.toBeDisabled();
+        expect(getSubmitButton()).not.toBeDisabled();
       });
     });
 
     describe("Email address", () => {
       it("displays a warning and disables the sign up button if the email address is not entered", () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        const emailInputField = getEmailAddressField(renderResult);
+        const emailInputField = getEmailAddressField();
         fireEvent.focus(emailInputField);
         fireEvent.blur(emailInputField);
 
         expect(
-          renderResult.getByText("Please provide your email address")
+          screen.getByText("Please provide your email address")
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
 
       it(`displays a warning and disables the sign up button if the email address is ${
         limits.emailAddressMaxLength + 1
       } long`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
-          getEmailAddressField(renderResult),
+          getEmailAddressField(),
           "a@b.c" + "a".repeat(limits.emailAddressMaxLength - 4)
         );
 
         expect(
-          renderResult.getByText(
+          screen.getByText(
             `Must be ${limits.emailAddressMaxLength} characters or fewer`
           )
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
 
       it(`displays a warning and disables the sign up button if the email address invalid`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        setValue(getEmailAddressField(renderResult), "invalid email address");
+        setValue(getEmailAddressField(), "invalid email address");
 
         expect(
-          renderResult.getByText("Email address is invalid")
+          screen.getByText("Email address is invalid")
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
 
       it("accepts the input if the email is five characters long and valid", () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        setValue(getEmailAddressField(renderResult), "a@b.c");
+        setValue(getEmailAddressField(), "a@b.c");
 
-        expect(getSubmitButton(renderResult)).not.toBeDisabled();
+        expect(getSubmitButton()).not.toBeDisabled();
       });
 
       it(`accepts the input if the email is ${limits.emailAddressMaxLength} characters long and valid`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
-          getEmailAddressField(renderResult),
+          getEmailAddressField(),
           "a@b.c" + "a".repeat(limits.emailAddressMaxLength - 5)
         );
 
-        expect(getSubmitButton(renderResult)).not.toBeDisabled();
+        expect(getSubmitButton()).not.toBeDisabled();
       });
     });
 
     describe("Date of birth", () => {
       it(`displays a warning and disables the sign up button if the date of birth field is invalid`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        const dateOfBirthField = getDateOfBirthField(renderResult);
+        const dateOfBirthField = getDateOfBirthField();
         fireEvent.focus(dateOfBirthField);
         fireEvent.blur(dateOfBirthField);
 
         expect(
-          renderResult.getByText("Please provide your date of birth")
+          screen.getByText("Please provide your date of birth")
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
 
       it(`displays a warning and disables the sign up button if the date of birth is in the future`, () => {
         const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
 
         setValue(
-          getDateOfBirthField(renderResult),
+          getDateOfBirthField(),
           dayjs().add(1, "day").format("YYYY-MM-DD")
         );
 
@@ -245,55 +231,50 @@ describe("Sign up form", () => {
             "Date of birth can't be in the future... right?... Is that you Marty?"
           )
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
     });
 
     describe("Password", () => {
       it(`displays a warning and disables the sign up button if the password is not set`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        const passwordField = getPasswordField(renderResult);
+        const passwordField = getPasswordField();
         fireEvent.focus(passwordField);
         fireEvent.blur(passwordField);
 
         expect(
-          renderResult.getByText(
-            "Please provide a password to protect your account"
-          )
+          screen.getByText("Please provide a password to protect your account")
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
 
       it(`displays a warning and disables the sign up button if the password is less than ${limits.passwordMinLength} characters`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        setValue(
-          getPasswordField(renderResult),
-          "a".repeat(limits.passwordMinLength - 1)
-        );
+        setValue(getPasswordField(), "a".repeat(limits.passwordMinLength - 1));
 
         expect(
-          renderResult.getByText(
+          screen.getByText(
             `The password must be at least ${limits.passwordMinLength} characters long`
           )
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
     });
 
     describe("Confirm password", () => {
       it(`displays a warning and disables the sign up button if the confirm password field is not filled`, () => {
-        const renderResult = render(<SignUpForm onSubmit={jest.fn()} />);
+        render(<SignUpForm onSubmit={jest.fn()} />);
 
-        const confirmPasswordField = getConfirmPasswordField(renderResult);
+        const confirmPasswordField = getConfirmPasswordField();
         fireEvent.focus(confirmPasswordField);
         fireEvent.blur(confirmPasswordField);
 
         expect(
-          renderResult.getByText("Please re-enter your password")
+          screen.getByText("Please re-enter your password")
         ).toBeInTheDocument();
-        expect(getSubmitButton(renderResult)).toBeDisabled();
+        expect(getSubmitButton()).toBeDisabled();
       });
     });
   });
@@ -301,9 +282,7 @@ describe("Sign up form", () => {
   describe("Submit", () => {
     it("performs provided action if the sign up is successful", async () => {
       const onSubmit = jest.fn();
-      const renderResult: RenderResult = render(
-        <SignUpForm onSubmit={onSubmit} />
-      );
+      render(<SignUpForm onSubmit={onSubmit} />);
 
       const formState: FormState = {
         firstName: "Test first name",
@@ -313,9 +292,9 @@ describe("Sign up form", () => {
         password: "testpassword",
         confirmPassword: "testpassword",
       };
-      updateFormState(formState, renderResult);
+      updateFormState(formState);
 
-      fireEvent.click(getSubmitButton(renderResult));
+      fireEvent.click(getSubmitButton());
 
       expect(onSubmit).toHaveBeenCalledWith({
         firstName: formState.firstName,
@@ -328,26 +307,20 @@ describe("Sign up form", () => {
 
     it("does not perform any action if passwords do not match", async () => {
       const onSubmit = jest.fn();
-      const renderResult: RenderResult = render(
-        <SignUpForm onSubmit={onSubmit} />
-      );
-      updateFormState(
-        {
-          firstName: "Test first name",
-          lastName: "Test last name",
-          emailAddress: "email@test.com",
-          dateOfBirth: "2021-11-10",
-          password: "testpassword",
-          confirmPassword: "non-matching password",
-        },
-        renderResult
-      );
+      render(<SignUpForm onSubmit={onSubmit} />);
+      updateFormState({
+        firstName: "Test first name",
+        lastName: "Test last name",
+        emailAddress: "email@test.com",
+        dateOfBirth: "2021-11-10",
+        password: "testpassword",
+        confirmPassword: "non-matching password",
+      });
 
-      fireEvent.click(getSubmitButton(renderResult));
+      fireEvent.click(getSubmitButton());
+
       await waitFor(() =>
-        expect(
-          renderResult.getByText("Passwords do not match")
-        ).toBeInTheDocument()
+        expect(screen.getByText("Passwords do not match")).toBeInTheDocument()
       );
 
       expect(onSubmit).toHaveBeenCalledTimes(0);
@@ -355,59 +328,57 @@ describe("Sign up form", () => {
   });
 });
 
-function getFirstNameField(renderResult: RenderResult): HTMLInputElement {
-  return renderResult.getByPlaceholderText("First name") as HTMLInputElement;
+function getFirstNameField(): HTMLInputElement {
+  return screen.getByPlaceholderText("First name") as HTMLInputElement;
 }
 
-function getLastNameField(renderResult: RenderResult): HTMLInputElement {
-  return renderResult.getByPlaceholderText("Last name") as HTMLInputElement;
+function getLastNameField(): HTMLInputElement {
+  return screen.getByPlaceholderText("Last name") as HTMLInputElement;
 }
 
-function getEmailAddressField(renderResult: RenderResult): HTMLInputElement {
-  return renderResult.getByPlaceholderText("Email address") as HTMLInputElement;
+function getEmailAddressField(): HTMLInputElement {
+  return screen.getByPlaceholderText("Email address") as HTMLInputElement;
 }
 
-function getDateOfBirthField(renderResult: RenderResult): HTMLInputElement {
-  return renderResult.getByLabelText("Date of birth") as HTMLInputElement;
+function getDateOfBirthField(): HTMLInputElement {
+  return screen.getByLabelText("Date of birth") as HTMLInputElement;
 }
 
-function getPasswordField(renderResult: RenderResult): HTMLInputElement {
-  return renderResult.getByPlaceholderText("Password") as HTMLInputElement;
+function getPasswordField(): HTMLInputElement {
+  return screen.getByPlaceholderText("Password") as HTMLInputElement;
 }
 
-function getConfirmPasswordField(renderResult: RenderResult): HTMLInputElement {
-  return renderResult.getByPlaceholderText(
-    "Confirm password"
-  ) as HTMLInputElement;
+function getConfirmPasswordField(): HTMLInputElement {
+  return screen.getByPlaceholderText("Confirm password") as HTMLInputElement;
 }
 
-function getSubmitButton(renderResult: RenderResult): HTMLButtonElement {
-  return renderResult.getByRole("button") as HTMLButtonElement;
+function getSubmitButton(): HTMLButtonElement {
+  return screen.getByRole("button") as HTMLButtonElement;
 }
 
-function updateFormState(formState: FormState, renderResult: RenderResult) {
+function updateFormState(formState: FormState) {
   if (formState.firstName) {
-    setValue(getFirstNameField(renderResult), formState.firstName);
+    setValue(getFirstNameField(), formState.firstName);
   }
 
   if (formState.lastName) {
-    setValue(getLastNameField(renderResult), formState.lastName);
+    setValue(getLastNameField(), formState.lastName);
   }
 
   if (formState.emailAddress) {
-    setValue(getEmailAddressField(renderResult), formState.emailAddress);
+    setValue(getEmailAddressField(), formState.emailAddress);
   }
 
   if (formState.dateOfBirth) {
-    setValue(getDateOfBirthField(renderResult), formState.dateOfBirth);
+    setValue(getDateOfBirthField(), formState.dateOfBirth);
   }
 
   if (formState.password) {
-    setValue(getPasswordField(renderResult), formState.password);
+    setValue(getPasswordField(), formState.password);
   }
 
   if (formState.confirmPassword) {
-    setValue(getConfirmPasswordField(renderResult), formState.confirmPassword);
+    setValue(getConfirmPasswordField(), formState.confirmPassword);
   }
 }
 

@@ -5,7 +5,6 @@ import Input from "../../inputs/input";
 import colours from "../../../common/colours/colours";
 import { isValidEmail } from "../../../common/email/email";
 import dayjs from "dayjs";
-import { HostConfig } from "../../../common/hosts/hosts";
 import Button from "../../inputs/button";
 import { CreateUserRequestDto } from "../../../common/hosts/auth/auth";
 
@@ -149,14 +148,6 @@ interface FormState {
   passwordError: string;
   confirmPasswordError: string;
   submitted: boolean;
-  submitError: string;
-}
-
-export interface UserDetails {
-  firstName: string;
-  lastName: string;
-  email: string;
-  dateOfBirth: string;
 }
 
 export interface SignUpFormProps {
@@ -178,7 +169,6 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
     passwordError: "",
     confirmPasswordError: "",
     submitted: false,
-    submitError: "",
   });
 
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -236,7 +226,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevents the reloading of the page
 
     const newFormState = { ...formState };
@@ -273,11 +263,11 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
       password: formState.password,
     } as CreateUserRequestDto;
 
-    onSubmit(userDetails);
+    await onSubmit(userDetails);
   };
 
   return (
-    <StyledSignUpForm onSubmit={handleSubmit}>
+    <StyledSignUpForm data-testid="sign-up-form">
       <SignUpHeading>Sign up</SignUpHeading>
       <NameContainer>
         <Input
@@ -339,6 +329,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
       </PasswordContainer>
       <SignUpContainer>
         <Button
+          onClick={handleSubmit}
           primary
           type="submit"
           disabled={errorsExistInForm(formState) || formState.submitted}
@@ -351,7 +342,6 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
         >
           Sign up
         </Button>
-        <ErrorField>{formState.submitError}</ErrorField>
       </SignUpContainer>
     </StyledSignUpForm>
   );
