@@ -4,7 +4,7 @@ import Label from "./label";
 
 export default {
   component: Label,
-  title: "Inputs/Label",
+  title: "Display/Forms/Label",
 } as Meta;
 
 interface LabelStoryProps extends React.LabelHTMLAttributes<HTMLLabelElement> {

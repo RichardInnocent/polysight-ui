@@ -70,6 +70,7 @@ const StyledButton = styled.button<ButtonProps>`
   border-radius: 10px;
   border: none;
   transition: background-color 0.5s ease;
+  font-size: 1.5em;
 
   :hover {
     background-color: ${(props) => getBackgroundColour(props, true)};

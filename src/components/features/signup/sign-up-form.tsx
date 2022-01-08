@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Label } from "../../inputs/label";
+import { Label } from "../../display/forms/label";
 import Input from "../../inputs/input";
 import colours from "../../../common/colours/colours";
 import { isValidEmail } from "../../../common/email/email";
 import dayjs from "dayjs";
 import Button from "../../inputs/button";
 import { CreateUserRequestDto } from "../../../common/hosts/auth/auth";
+import FormErrorMessage from "../../display/forms/formErrorMessage";
 
 export interface SignUpFormProps {
   onSubmit: (userDetails: CreateUserRequestDto) => Promise<void>;
@@ -33,11 +34,6 @@ const SignUpHeading = styled.h1`
   text-align: center;
 `;
 
-const ErrorField = styled.div`
-  color: ${colours.errorColour};
-  font-size: 0.8em;
-`;
-
 const NameContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,11 +53,6 @@ const DateContainer = styled.div`
   grid-column: span 2;
   display: flex;
   flex-direction: column;
-`;
-
-const DateOfBirthLabel = styled(Label)`
-  font-size: 0.8em;
-  margin-bottom: 5px;
 `;
 
 const DateField = styled(Input)`
@@ -277,7 +268,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
           onBlur={handleFirstNameChange}
           errorState={formState.firstNameError.length > 0}
         />
-        <ErrorField>{formState.firstNameError}</ErrorField>
+        <FormErrorMessage>{formState.firstNameError}</FormErrorMessage>
       </NameContainer>
       <NameContainer>
         <Input
@@ -287,7 +278,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
           onBlur={handleLastNameChange}
           errorState={formState.lastNameError.length > 0}
         />
-        <ErrorField>{formState.lastNameError}</ErrorField>
+        <FormErrorMessage>{formState.lastNameError}</FormErrorMessage>
       </NameContainer>
       <EmailAddressContainer>
         <EmailAddressField
@@ -297,17 +288,17 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
           onBlur={handleEmailAddressChange}
           errorState={formState.emailError.length > 0}
         />
-        <ErrorField>{formState.emailError}</ErrorField>
+        <FormErrorMessage>{formState.emailError}</FormErrorMessage>
       </EmailAddressContainer>
       <DateContainer>
-        <DateOfBirthLabel htmlFor="dateOfBirth">Date of birth</DateOfBirthLabel>
+        <Label htmlFor="dateOfBirth">Date of birth</Label>
         <DateField
           id="dateOfBirth"
           type="date"
           onBlur={handleDateOfBirthChange}
           errorState={formState.dateOfBirthError.length > 0}
         />
-        <ErrorField>{formState.dateOfBirthError}</ErrorField>
+        <FormErrorMessage>{formState.dateOfBirthError}</FormErrorMessage>
       </DateContainer>
       <PasswordContainer>
         <PasswordField
@@ -316,7 +307,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
           onBlur={handlePasswordChange}
           errorState={formState.passwordError.length > 0}
         />
-        <ErrorField>{formState.passwordError}</ErrorField>
+        <FormErrorMessage>{formState.passwordError}</FormErrorMessage>
       </PasswordContainer>
       <PasswordContainer>
         <PasswordField
@@ -325,7 +316,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
           onBlur={handleConfirmPasswordChange}
           errorState={formState.confirmPasswordError.length > 0}
         />
-        <ErrorField>{formState.confirmPasswordError}</ErrorField>
+        <FormErrorMessage>{formState.confirmPasswordError}</FormErrorMessage>
       </PasswordContainer>
       <SignUpContainer>
         <Button

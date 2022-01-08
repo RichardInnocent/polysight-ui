@@ -4,6 +4,7 @@ import Input from "../../inputs/input";
 import styled from "styled-components";
 import Button from "../../inputs/button";
 import { LoginRequestDto } from "../../../common/hosts/auth/auth";
+import FormErrorMessage from "../../display/forms/formErrorMessage";
 
 export interface LoginFormProps {
   onSubmit: (credentials: LoginRequestDto) => void;
@@ -25,10 +26,6 @@ const StyledSignUpForm = styled.form`
 const FormFieldDiv = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const ErrorMessage = styled.div`
-  color: ${colours.errorColour};
 `;
 
 function validateEmail(email: string): string {
@@ -85,7 +82,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): ReactElement => {
           onChange={handleEmailChange}
           errorState={emailError.length > 0}
         />
-        <ErrorMessage>{emailError}</ErrorMessage>
+        <FormErrorMessage>{emailError}</FormErrorMessage>
       </FormFieldDiv>
       <FormFieldDiv>
         <Input
@@ -94,7 +91,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): ReactElement => {
           onChange={handlePasswordChange}
           errorState={passwordError.length > 0}
         />
-        <ErrorMessage>{passwordError}</ErrorMessage>
+        <FormErrorMessage>{passwordError}</FormErrorMessage>
       </FormFieldDiv>
       <FormFieldDiv>
         <Button
