@@ -8,6 +8,10 @@ import dayjs from "dayjs";
 import Button from "../../inputs/button";
 import { CreateUserRequestDto } from "../../../common/hosts/auth/auth";
 
+export interface SignUpFormProps {
+  onSubmit: (userDetails: CreateUserRequestDto) => Promise<void>;
+}
+
 const limits = {
   firstNameMaxLength: 32,
   lastNameMaxLength: 32,
@@ -148,10 +152,6 @@ interface FormState {
   passwordError: string;
   confirmPasswordError: string;
   submitted: boolean;
-}
-
-export interface SignUpFormProps {
-  onSubmit: (userDetails: CreateUserRequestDto) => void;
 }
 
 export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {

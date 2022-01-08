@@ -296,6 +296,10 @@ describe("Sign up form", () => {
 
       fireEvent.click(getSubmitButton());
 
+      await waitFor(() =>
+        expect(screen.queryByRole("progressbar")).not.toBeInTheDocument()
+      );
+
       expect(onSubmit).toHaveBeenCalledWith({
         firstName: formState.firstName,
         lastName: formState.lastName,
