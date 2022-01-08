@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "./input";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 describe("input", () => {
   it("renders successfully", () => {
@@ -9,17 +9,15 @@ describe("input", () => {
 
   it("renders the placeholder", () => {
     const placeholder = "Some placeholder text";
-    const { queryByPlaceholderText } = render(
-      <Input type="text" placeholder={placeholder} />
-    );
+    render(<Input type="text" placeholder={placeholder} />);
 
-    expect(queryByPlaceholderText(placeholder)).toBeInTheDocument();
+    expect(screen.queryByPlaceholderText(placeholder)).toBeInTheDocument();
   });
 
   it("calls the on change function when its value is modified", () => {
     const placeholder = "Some placeholder text";
     const onChangeFunction = jest.fn();
-    const { getByPlaceholderText } = render(
+    render(
       <Input
         type="text"
         onChange={onChangeFunction}
@@ -32,7 +30,7 @@ describe("input", () => {
 
     const newValue = "New value";
 
-    fireEvent.change(getByPlaceholderText(placeholder), {
+    fireEvent.change(screen.getByPlaceholderText(placeholder), {
       target: { value: newValue },
     });
 
