@@ -20,18 +20,18 @@ describe("Button", () => {
     it("renders the loading spinner while waiting for the action to complete, and then removes it", async () => {
       const onClick = jest.fn(onClickImpl);
 
-      const view = render(
+      render(
         <Button showSpinnerOnLoad={true} onClick={onClick}>
           {buttonName}
         </Button>
       );
 
-      expect(view.queryByRole("progressbar")).not.toBeInTheDocument();
+      expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
       fireEvent.click(getButton());
-      expect(view.getByRole("progressbar")).toBeInTheDocument();
+      expect(screen.getByRole("progressbar")).toBeInTheDocument();
 
       await waitFor(() => {
-        expect(view.queryByRole("progressbar")).not.toBeInTheDocument();
+        expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
       });
       expect(onClick).toHaveBeenCalledTimes(1);
     });
@@ -39,15 +39,15 @@ describe("Button", () => {
     it("ignores any other clicks while loading", async () => {
       const onClick = jest.fn(onClickImpl);
 
-      const view = render(
+      render(
         <Button showSpinnerOnLoad={true} onClick={onClick}>
           {buttonName}
         </Button>
       );
 
-      expect(view.queryByRole("progressbar")).not.toBeInTheDocument();
+      expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
       fireEvent.click(getButton());
-      expect(view.getByRole("progressbar")).toBeInTheDocument();
+      expect(screen.getByRole("progressbar")).toBeInTheDocument();
 
       // Clicking an additional three times while the button is still in a loading state
       for (let i = 0; i < 3; i++) {
@@ -55,7 +55,7 @@ describe("Button", () => {
       }
 
       await waitFor(() => {
-        expect(view.queryByRole("progressbar")).not.toBeInTheDocument();
+        expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
       });
       expect(onClick).toHaveBeenCalledTimes(1);
     });
