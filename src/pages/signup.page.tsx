@@ -38,7 +38,6 @@ export const SignUpPageFromProps: NextPage<SignUpPageProps> = ({
               await createUser(userDetails);
               await Router.push("/login");
             } catch (e) {
-              console.log(e);
               setCreateUserError(
                 "Failed to create user. Please try again later"
               );

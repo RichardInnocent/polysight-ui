@@ -15,11 +15,9 @@ const Template: ComponentStory<typeof SignUpForm> = (
 
 export const Default = Template.bind({});
 Default.args = {
-  onSubmit: (userDetails) => {
+  onSubmit: () => {
     return new Promise((resolve) => {
-      console.log("Creating user", userDetails);
       setTimeout(resolve, 4000);
-      console.log("User created", userDetails);
     });
   },
 };
