@@ -6,9 +6,9 @@ import {
 } from "../common/hosts/auth/auth";
 import styled from "styled-components";
 import colours from "../common/colours/colours";
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 import Router from "next/router";
-import { developmentConfig } from "../common/hosts/hosts";
+import { routes } from "../common/hosts/hosts";
 
 export interface SignUpPageProps {
   createUser: (user: CreateUserRequestDto) => Promise<CreateUserResponseDto>;
@@ -23,7 +23,7 @@ const SignUpFormContainer = styled.div`
   flex-direction: column;
 `;
 
-export const SignUpPage: NextPage<SignUpPageProps> = ({
+export const SignUpPageFromProps: NextPage<SignUpPageProps> = ({
   createUser,
 }: SignUpPageProps) => {
   const [createUserError, setCreateUserError] = useState("");
@@ -37,7 +37,8 @@ export const SignUpPage: NextPage<SignUpPageProps> = ({
             try {
               await createUser(userDetails);
               await Router.push("/login");
-            } catch {
+            } catch (e) {
+              console.log(e);
               setCreateUserError(
                 "Failed to create user. Please try again later"
               );
@@ -50,15 +51,10 @@ export const SignUpPage: NextPage<SignUpPageProps> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps<
-  SignUpPageProps
-> = async () => {
-  return {
-    props: {
-      createUser: (userDetails) =>
-        developmentConfig.authService.users.createUser(userDetails),
-    } as SignUpPageProps,
-  };
+export const SignUpPage: NextPage<SignUpPageProps> = () => {
+  return SignUpPageFromProps({
+    createUser: routes.authService.users.createUser,
+  });
 };
 
 export default SignUpPage;

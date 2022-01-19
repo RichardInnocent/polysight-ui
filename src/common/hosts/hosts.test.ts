@@ -1,11 +1,9 @@
-import { developmentConfig } from "./hosts";
+import { routes } from "./hosts";
 
 describe("hosts", () => {
   describe("development config", () => {
     it("is configured correctly", () => {
-      expect(developmentConfig.authService.baseRoute).toBe(
-        "http://localhost:8080"
-      );
+      expect(routes.authService.baseRoute).toBe("/api/auth");
     });
   });
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import SignUpPage from "./signup.page";
+import SignUpPage, { SignUpPageFromProps } from "./signup.page";
 import {
   CreateUserRequestDto,
   CreateUserResponseDto,
@@ -41,11 +41,12 @@ describe("Sign up page", () => {
 
     it("redirects to the login page on success", async () => {
       const createUser = jest.fn(
-        (userDetails: CreateUserRequestDto) => createUserResponse
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        (_: CreateUserRequestDto) => createUserResponse
       );
 
       render(
-        <SignUpPage
+        <SignUpPageFromProps
           createUser={(userDetails) => {
             return new Promise<CreateUserResponseDto>((resolve) => {
               const user = createUser(userDetails);

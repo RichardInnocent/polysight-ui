@@ -4,8 +4,8 @@ export interface HostConfig {
   authService: AuthService;
 }
 
-export const developmentConfig: HostConfig = {
-  authService: newAuthService("http://localhost:8080"),
+export const routes: HostConfig = {
+  authService: newAuthService("/api/auth"),
 };
 
 export default HostConfig;
