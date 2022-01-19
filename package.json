@@ -20,7 +20,7 @@
   },
   "scripts": {
     "lint": "prettier --write ./src/**/*.{ts,tsx,js} && eslint --fix",
-    "start": "next start",
+    "start": "node server.js",
     "build": "next build",
     "test": "jest --watchAll=false ./src/**",
     "test:watch": "next test --watch",
