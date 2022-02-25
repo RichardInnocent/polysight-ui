@@ -3,27 +3,37 @@ import styled from "styled-components";
 import Spinner from "../icons/spinner";
 import colours from "../../common/colours/colours";
 
-export interface ButtonProps
+export interface StyledButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   primary?: boolean;
+}
+
+export interface ButtonProps extends StyledButtonProps {
+  onAction?: () => Promise<void>;
   showSpinnerOnLoad?: boolean;
 }
 
 export const Button = (props: ButtonProps): JSX.Element => {
   const [loading, setLoading] = useState(false);
 
+  const { onAction, ...styledButtonProps } = props;
+
   // Wrap the onClick to ensure that the loading state is set accordingly
-  const action = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const action = (e: React.MouseEvent) => {
+    e.preventDefault();
     // If the button is already in a loading state, don't re-action the event
-    if (props.onClick && !loading) {
+    if (onAction && !loading) {
       setLoading(true);
-      await props.onClick(event);
-      setLoading(false);
+      onAction()
+        .catch(() => {
+          return;
+        })
+        .finally(() => setLoading(false));
     }
   };
 
   return (
-    <StyledButton {...props} onClick={action}>
+    <StyledButton {...styledButtonProps} onClick={action}>
       {props.children}
       {props.showSpinnerOnLoad && loading && (
         <StyledSpinner fontSize="1em" stroke={getFontColour(props)} />
@@ -63,7 +73,7 @@ const StyledSpinner = styled(Spinner)<SpinnerProps>`
   height: ${(props) => props.fontSize};
 `;
 
-const StyledButton = styled.button<ButtonProps>`
+const StyledButton = styled.button<StyledButtonProps>`
   background-color: ${(props) => getBackgroundColour(props, false)};
   color: ${(props) => getFontColour(props)};
   padding: 10px;

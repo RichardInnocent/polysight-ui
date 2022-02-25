@@ -13,15 +13,20 @@ describe("Button", () => {
 
   describe("Loading state", () => {
     const waitTime = 50;
-    const onClickImpl = async () => {
-      await new Promise((resolve) => setTimeout(resolve, waitTime));
-    };
 
     it("renders the loading spinner while waiting for the action to complete, and then removes it", async () => {
-      const onClick = jest.fn(onClickImpl);
+      const actionEvent = jest.fn();
+
+      const onAction = () =>
+        new Promise<void>((resolve) =>
+          setTimeout(() => {
+            actionEvent();
+            resolve();
+          }, waitTime)
+        );
 
       render(
-        <Button showSpinnerOnLoad={true} onClick={onClick}>
+        <Button showSpinnerOnLoad={true} onAction={onAction}>
           {buttonName}
         </Button>
       );
@@ -33,14 +38,22 @@ describe("Button", () => {
       await waitFor(() => {
         expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
       });
-      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(actionEvent).toHaveBeenCalledTimes(1);
     });
 
     it("ignores any other clicks while loading", async () => {
-      const onClick = jest.fn(onClickImpl);
+      const actionEvent = jest.fn();
+
+      const onAction = () =>
+        new Promise<void>((resolve) =>
+          setTimeout(() => {
+            actionEvent();
+            resolve();
+          }, waitTime)
+        );
 
       render(
-        <Button showSpinnerOnLoad={true} onClick={onClick}>
+        <Button showSpinnerOnLoad={true} onAction={onAction}>
           {buttonName}
         </Button>
       );
@@ -57,7 +70,7 @@ describe("Button", () => {
       await waitFor(() => {
         expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
       });
-      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(actionEvent).toHaveBeenCalledTimes(1);
     });
   });
 });

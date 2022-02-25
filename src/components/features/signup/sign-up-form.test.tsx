@@ -281,7 +281,12 @@ describe("Sign up form", () => {
 
   describe("Submit", () => {
     it("performs provided action if the sign up is successful", async () => {
-      const onSubmit = jest.fn();
+      const onSubmitMock = jest.fn();
+      const onSubmit = (userDetails: CreateUserRequestDto) =>
+        new Promise<void>((resolve) => {
+          onSubmitMock(userDetails);
+          resolve();
+        });
       render(<SignUpForm onSubmit={onSubmit} />);
 
       const formState: FormState = {
@@ -300,7 +305,7 @@ describe("Sign up form", () => {
         expect(screen.queryByRole("progressbar")).not.toBeInTheDocument()
       );
 
-      expect(onSubmit).toHaveBeenCalledWith({
+      expect(onSubmitMock).toHaveBeenCalledWith({
         firstName: formState.firstName,
         lastName: formState.lastName,
         email: formState.emailAddress,
@@ -310,7 +315,16 @@ describe("Sign up form", () => {
     });
 
     it("does not perform any action if passwords do not match", async () => {
-      const onSubmit = jest.fn();
+      const onSubmitMock = jest.fn();
+      const onSubmit = (userDetails: CreateUserRequestDto) =>
+        new Promise<void>((resolve) => {
+          try {
+            onSubmitMock(userDetails);
+            resolve();
+          } catch {
+            resolve();
+          }
+        });
       render(<SignUpForm onSubmit={onSubmit} />);
       updateFormState({
         firstName: "Test first name",
@@ -327,7 +341,7 @@ describe("Sign up form", () => {
         expect(screen.getByText("Passwords do not match")).toBeInTheDocument()
       );
 
-      expect(onSubmit).toHaveBeenCalledTimes(0);
+      expect(onSubmitMock).toHaveBeenCalledTimes(0);
     });
   });
 });

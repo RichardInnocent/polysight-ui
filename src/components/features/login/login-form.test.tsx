@@ -1,12 +1,16 @@
 import React from "react";
 import { LoginForm, LoginFormProps } from "./login-form";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { LoginRequestDto } from "../../../common/hosts/auth/auth";
 
 describe("Login form", () => {
-  const loginAction = Promise.resolve();
+  const onSubmitMock = jest.fn();
   const props = {
-    onSubmit: jest.fn(() => loginAction),
+    onSubmit: (credentials) =>
+      new Promise<void>((resolve) => {
+        onSubmitMock(credentials);
+        resolve();
+      }),
   } as LoginFormProps;
   it("renders", () => {
     render(<LoginForm {...props} />);
@@ -21,9 +25,11 @@ describe("Login form", () => {
     setInputs(credentials);
 
     fireEvent.click(getLoginButton());
-    await act(() => loginAction);
+    await waitFor(() =>
+      expect(screen.queryByRole("progressbar")).not.toBeInTheDocument()
+    );
 
-    expect(props.onSubmit).toHaveBeenCalledWith(credentials);
+    expect(onSubmitMock).toHaveBeenCalledWith(credentials);
   });
 
   describe("validation", () => {

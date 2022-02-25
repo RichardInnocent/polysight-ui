@@ -13,12 +13,12 @@ const StyledButton = styled(Button)`
 `;
 
 const Template: Story<ButtonProps> = (args: ButtonProps) => {
-  const onClick = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+  const onAction = (): Promise<void> => {
+    return new Promise<void>((resolve) => setTimeout(resolve, 2000));
   };
 
   return (
-    <StyledButton {...args} onClick={onClick}>
+    <StyledButton {...args} onAction={onAction}>
       {args.value}
     </StyledButton>
   );

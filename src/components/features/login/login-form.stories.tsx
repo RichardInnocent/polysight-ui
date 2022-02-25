@@ -13,5 +13,8 @@ const Template: ComponentStory<typeof LoginForm> = (props: LoginFormProps) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  onSubmit: (credentials) => console.log("Signing in user", credentials),
+  onSubmit: (credentials): Promise<void> => {
+    console.log("Signing in user", credentials);
+    return new Promise((resolve) => setTimeout(resolve, 2_000));
+  },
 } as LoginFormProps;

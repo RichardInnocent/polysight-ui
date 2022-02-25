@@ -217,9 +217,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
     );
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevents the reloading of the page
-
+  const handleSubmit = (): Promise<void> => {
     const newFormState = { ...formState };
     newFormState.firstNameError = validateFirstName(formState.firstName);
     newFormState.lastNameError = validateLastName(formState.lastName);
@@ -243,7 +241,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
     if (errorsExistInForm(newFormState)) {
       newFormState.submitted = false;
       setFormState(newFormState);
-      return;
+      return Promise.reject("errors exist in form");
     }
 
     const userDetails = {
@@ -254,7 +252,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
       password: formState.password,
     } as CreateUserRequestDto;
 
-    await onSubmit(userDetails);
+    return onSubmit(userDetails);
   };
 
   return (
@@ -320,7 +318,7 @@ export const SignUpForm = ({ onSubmit }: SignUpFormProps): JSX.Element => {
       </PasswordContainer>
       <SignUpContainer>
         <Button
-          onClick={handleSubmit}
+          onAction={handleSubmit}
           primary
           type="submit"
           disabled={errorsExistInForm(formState) || formState.submitted}

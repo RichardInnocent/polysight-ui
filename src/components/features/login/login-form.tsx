@@ -7,7 +7,7 @@ import { LoginRequestDto } from "../../../common/hosts/auth/auth";
 import FormErrorMessage from "../../display/forms/formErrorMessage";
 
 export interface LoginFormProps {
-  onSubmit: (credentials: LoginRequestDto) => void;
+  onSubmit: (credentials: LoginRequestDto) => Promise<void>;
 }
 
 const LoginHeading = styled.h1`
@@ -54,15 +54,13 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): ReactElement => {
     setPasswordError(validatePassword(e.target.value));
   };
 
-  const wrappedOnSubmit = (e: React.MouseEvent) => {
-    e.preventDefault();
-
+  const wrappedOnSubmit = (): Promise<void> => {
     const currentEmailError = validateEmail(email);
     const currentPasswordError = validatePassword(password);
     setEmailError(currentEmailError);
     setPasswordError(currentPasswordError);
     if (currentEmailError.length > 1 || currentPasswordError.length > 1) {
-      return;
+      return Promise.reject("email or password has not been filled in");
     }
 
     const credentials = {
@@ -70,7 +68,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): ReactElement => {
       password: password,
     } as LoginRequestDto;
 
-    onSubmit(credentials);
+    return onSubmit(credentials);
   };
 
   return (
@@ -96,8 +94,9 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): ReactElement => {
       <FormFieldDiv>
         <Button
           primary
-          onClick={wrappedOnSubmit}
+          onAction={wrappedOnSubmit}
           disabled={emailError.length > 0 || passwordError.length > 0}
+          showSpinnerOnLoad={true}
         >
           Log in
         </Button>
